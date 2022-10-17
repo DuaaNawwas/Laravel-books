@@ -4,15 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'author', 'language', 'country', 'year', 'pages', 'description', 'image'];
 
 
-
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('description', 'like', '%' . request('search') . '%')
+                ->orWhere('author', 'like', '%' . request('search') . '%')
+                ->orWhere('language', 'like', '%' . request('search') . '%')
+                ->orWhere('country', 'like', '%' . request('search') . '%')
+                ->orWhere('year', 'like', '%' . request('search') . '%');
+        }
+    }
 
     // public static function allBooks()
     // {

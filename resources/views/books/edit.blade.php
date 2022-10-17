@@ -98,7 +98,7 @@
 
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-dark btn-block mb-4">Add</button>
+            <button type="submit" class="btn btn-dark btn-block mb-4">Update</button>
         </form>
 
     </div>

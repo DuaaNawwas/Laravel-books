@@ -33,6 +33,8 @@ Route::get('/', [BooksController::class, 'index']);
 // Routes for all Books related Pages
 Route::resource('/books', BooksController::class);
 
+
+// ---------------------Routes for Registration-----------------------------
 // Show Register Form
 Route::get('/register', [UsersController::class, 'create']);
 
@@ -47,3 +49,18 @@ Route::get('/login', [UsersController::class, 'login']);
 
 // Login User
 Route::post('users/authenticate', [UsersController::class, 'authenticate']);
+
+
+// -------------------------------------------------------------------------
+
+// Show Deleted Items Page
+Route::get('/trash', [BooksController::class, 'trash'])->middleware('auth');
+
+// Show sorted Books
+Route::get('/{sort?}', [BooksController::class, 'sort']);
+
+// Force Delete an Item
+Route::delete('/forcedelete/{id}', [BooksController::class, 'forceDelete']);
+
+// Restore a Deleted Item
+Route::get('/restore/{id}', [BooksController::class, 'restore']);

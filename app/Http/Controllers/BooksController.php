@@ -26,9 +26,53 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('books.index', ['books' => Book::all()]);
+
+        // // sort without updated column
+
+        // if ($request['sort']) {
+        //     if ($request['sort'] == 'oldest') {
+        //         $books = Book::filter(request(['search']))->get();
+        //     } else {
+        //         $books = Book::latest()->filter(request(['search']))->get();
+        //     }
+        // } else {
+
+        //     $books =  Book::filter(request(['search']))->get();
+        // }
+
+        // sort with updated column
+        // if ($request['sort']) {
+        //     if ($request['sort'] == 'oldest') {
+        //         $books = Book::filter(request(['search']))->paginate(6);
+        //     } else {
+        //         $books = Book::filter(request(['search']))->orderBy('updated_at', 'desc')->paginate(6);
+        //     }
+        // } else {
+
+        $books =  Book::filter(request(['search']))->paginate(6);
+        // }
+
+        // return view('books.index', ['books' => Book::latest()->filter(request(['search']))->get()]);
+        return view('books.index', ['books' => $books]);
+    }
+
+    public function sort()
+    {
+
+        if (@request('sort')) {
+            if (@request('sort') == 'oldest') {
+                $books = Book::filter(request(['search']))->paginate(6);
+            } else {
+                $books = Book::filter(request(['search']))->orderBy('updated_at', 'desc')->paginate(6);
+            }
+        } else {
+
+            $books =  Book::filter(request(['search']))->paginate(6);
+        }
+
+        return view('books.index', ['books' => $books]);
     }
 
     /**
@@ -163,6 +207,28 @@ class BooksController extends Controller
     public function destroy($id)
     {
         Book::where('id', $id)->delete();
+        // Book::destroy($id);
+        return redirect('/');
+    }
+
+    // Show deleted books page
+    public function trash()
+    {
+        return view('books.trash', ['books' => Book::onlyTrashed()->get()]);
+    }
+
+    // Force delete book
+    public function forceDelete($id)
+    {
+        Book::where('id', $id)->forceDelete();
+
+        return back();
+    }
+
+    // Restore a deleted book
+    public function restore($id)
+    {
+        Book::where('id', $id)->restore();
 
         return redirect('/');
     }
