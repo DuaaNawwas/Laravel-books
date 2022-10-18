@@ -18,11 +18,11 @@
             <a href="/books/create">
                 <button type="button" class="btn btn-dark btn-rounded"><i class="fas fa-plus"></i> Add a book</button>
             </a>
-            @auth
-                <a href="/trash">
-                    <button type="button" class="btn btn-light btn-rounded"><i class="fas fa-trash"></i> Deleted Books</button>
-                </a>
-            @endauth
+
+            <a href="/trash">
+                <button type="button" class="btn btn-light btn-rounded"><i class="fas fa-trash"></i> Deleted Books</button>
+            </a>
+
             <!-- Light -->
             <div class="btn-group shadow-0">
                 <button type="button" class="btn btn-light dropdown-toggle" data-mdb-toggle="dropdown"
@@ -62,7 +62,7 @@
                                             </p>
                                             <p class="card-text">
                                                 <small
-                                                    class="text-muted">{{ $book['author'] . ' ' . $book['year'] }}</small>
+                                                    class="text-muted">{{ $book->author['name'] . ' ' . $book['year'] }}</small>
                                             </p>
                                             {{-- <div> --}}
                                             {{-- <a href="books/{{ $book->id }}/edit" class="btn btn-info btn-floating"> --}}

@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
-            $table->string('author');
+            $table->foreignId('author_id');
             $table->string('country');
             $table->string('image')->default('images/book-cover-placeholder.jpg');
             $table->integer('year');
             $table->integer('pages');
             $table->string('language');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -26,7 +26,8 @@
                         </p>
                         <div class="pb-5 pt-3">
                             <p class="card-text">
-                                <small class="text-muted">Author: {{ $book['author'] }}</small>
+                                <a href="/author/{{ $book->author_id }}"> <small>Author:
+                                        {{ $book->author['name'] }}</small></a>
                             </p>
                             <p class="card-text">
                                 <small class="text-muted">Year: {{ $book['year'] }}</small>

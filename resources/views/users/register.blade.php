@@ -52,6 +52,7 @@
             <!-- Submit button -->
             <button type="submit" class="btn btn-dark btn-block mb-4">Sign up</button>
 
+            <p class="small">Already have an account? <a href="/login"> Login</a></p>
         </form>
     </div>
 @endsection

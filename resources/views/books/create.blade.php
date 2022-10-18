@@ -25,14 +25,18 @@
             @enderror
 
             <!-- Author input -->
-            <div class="form-outline mb-4">
+            {{-- <div class="form-outline mb-4">
                 <input type="text" name="author" id="book-author" class="form-control" value="{{ old('author') }}" />
                 <label class="form-label" for="book-author">Book Author</label>
             </div>
 
             @error('author')
                 <p class="text-danger small" style="margin-top: -1.5rem">{{ $message }}</p>
-            @enderror
+            @enderror --}}
+
+
+
+
 
             <!-- Language input -->
             <div class="form-outline mb-4">
@@ -95,7 +99,18 @@
                 <p class="text-danger small" style="margin-top: -1.5rem">{{ $message }}</p>
             @enderror
 
+            <div class="form-outline mb-4">
+                <select name="author_id" id="">
+                    <option value="" disabled selected>Choose an author</option>
+                    @foreach ($authors as $author)
+                        <option value="{{ $author['id'] }}"> {{ $author['name'] }} </option>
+                    @endforeach
+                </select>
+            </div>
 
+            @error('author_id')
+                <p class="text-danger small" style="margin-top: -1.5rem">{{ $message }}</p>
+            @enderror
 
             <!-- Submit button -->
             <button type="submit" class="btn btn-dark btn-block mb-4">Add</button>

@@ -11,7 +11,7 @@ class Book extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title', 'author', 'language', 'country', 'year', 'pages', 'description', 'image'];
+    protected $fillable = ['title', 'author_id', 'language', 'country', 'year', 'pages', 'description', 'image'];
 
 
     public function scopeFilter($query, array $filters)
@@ -19,13 +19,16 @@ class Book extends Model
         if ($filters['search'] ?? false) {
             $query->where('title', 'like', '%' . request('search') . '%')
                 ->orWhere('description', 'like', '%' . request('search') . '%')
-                ->orWhere('author', 'like', '%' . request('search') . '%')
                 ->orWhere('language', 'like', '%' . request('search') . '%')
                 ->orWhere('country', 'like', '%' . request('search') . '%')
                 ->orWhere('year', 'like', '%' . request('search') . '%');
         }
     }
 
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
+    }
     // public static function allBooks()
     // {
     //     return [

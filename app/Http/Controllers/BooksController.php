@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('auth')->only('create');
+    }
+
 
     // methods for hard coded data
 
@@ -82,7 +90,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        return view('books.create', ['authors' => Author::all()]);
     }
 
     /**
@@ -129,7 +137,7 @@ class BooksController extends Controller
         // ---------------------------------------------------
         $formFields = $request->validate([
             'title' => 'required',
-            'author' => 'required',
+            'author_id' => 'required',
             'language' => 'required',
             'country' => 'required',
             'year' => 'required',
@@ -166,7 +174,7 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        return view('books.edit')->with('book', Book::find($id));
+        return view('books.edit')->with('book', Book::find($id))->with('authors', Author::all());
     }
 
     /**
@@ -180,7 +188,7 @@ class BooksController extends Controller
     {
         $formFields = $request->validate([
             'title' => 'required',
-            'author' => 'required',
+            'author_id' => 'required',
             'language' => 'required',
             'country' => 'required',
             'year' => 'required',
@@ -231,5 +239,12 @@ class BooksController extends Controller
         Book::where('id', $id)->restore();
 
         return redirect('/');
+    }
+
+
+    // Show author information
+    public function author($id)
+    {
+        return view('books.author', ['author' => Author::find($id)]);
     }
 }

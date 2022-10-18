@@ -45,7 +45,7 @@ Route::post('/users', [UsersController::class, 'store']);
 Route::post('/logout', [UsersController::class, 'logout']);
 
 // Show Login Form 
-Route::get('/login', [UsersController::class, 'login']);
+Route::get('/login', [UsersController::class, 'login'])->name('login');
 
 // Login User
 Route::post('users/authenticate', [UsersController::class, 'authenticate']);
@@ -55,6 +55,9 @@ Route::post('users/authenticate', [UsersController::class, 'authenticate']);
 
 // Show Deleted Items Page
 Route::get('/trash', [BooksController::class, 'trash'])->middleware('auth');
+
+// Show author information
+Route::get('/author/{id}', [BooksController::class, 'author']);
 
 // Show sorted Books
 Route::get('/{sort?}', [BooksController::class, 'sort']);

@@ -34,6 +34,9 @@
             <!-- Submit button -->
             <button type="submit" class="btn btn-dark btn-block mb-4">Sign in</button>
 
+
+            <p class="small">Don't have an account? <a href="/register"> Register </a></p>
+
         </form>
     </div>
 @endsection
