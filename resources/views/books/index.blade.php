@@ -15,10 +15,11 @@
             </button>
         </form>
         <div class="my-5">
-            <a href="/books/create">
-                <button type="button" class="btn btn-dark btn-rounded"><i class="fas fa-plus"></i> Add a book</button>
-            </a>
-
+            @can('create-book')
+                <a href="/books/create">
+                    <button type="button" class="btn btn-dark btn-rounded"><i class="fas fa-plus"></i> Add a book</button>
+                </a>
+            @endcan
             <a href="/trash">
                 <button type="button" class="btn btn-light btn-rounded"><i class="fas fa-trash"></i> Deleted Books</button>
             </a>

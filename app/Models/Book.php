@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -16,11 +17,26 @@ class Book extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        // $authors = self::has('author')->get();
+        // $authors = self::with('author')
+        //     ->whereHas('author', function (Builder $query) {
+        //         $query->where('name', 'like', '%' . request('search') . '%');
+        //     })
+        //     ->get();
+        // $author = Author::where("name", "=", request("search"));
+        // 
+
+        // $author = Author::where("name", "=", request("search"))->first();
+        $author = Author::where("name", "like", '%' .  request("search") . '%')->first() ?? false;
+
         if ($filters['search'] ?? false) {
             $query->where('title', 'like', '%' . request('search') . '%')
                 ->orWhere('description', 'like', '%' . request('search') . '%')
                 ->orWhere('language', 'like', '%' . request('search') . '%')
                 ->orWhere('country', 'like', '%' . request('search') . '%')
+                // ->orWhere("author_id", "=", $authors->id)
+                ->orWhere("author_id", "=", $author->id)
+                // ->orWhere($authors, 'like', '%' . request('search') . '%')
                 ->orWhere('year', 'like', '%' . request('search') . '%');
         }
     }
@@ -28,6 +44,10 @@ class Book extends Model
     public function author()
     {
         return $this->belongsTo(Author::class);
+    }
+    public function editor()
+    {
+        return $this->belongsTo(User::class);
     }
     // public static function allBooks()
     // {

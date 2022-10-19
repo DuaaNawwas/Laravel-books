@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BooksController extends Controller
 {
@@ -12,7 +13,7 @@ class BooksController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth')->only('create');
+        $this->middleware(['auth', 'verified'])->only('create');
     }
 
 
@@ -90,6 +91,7 @@ class BooksController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create-book');
         return view('books.create', ['authors' => Author::all()]);
     }
 
@@ -101,6 +103,7 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
+        // Gate::authorize('create-book', Book::class);
         // dd($request->all());
 
         // ---------------------------------------------------
@@ -174,6 +177,7 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update',  Book::find($id));
         return view('books.edit')->with('book', Book::find($id))->with('authors', Author::all());
     }
 
@@ -186,6 +190,7 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update',  Book::find($id));
         $formFields = $request->validate([
             'title' => 'required',
             'author_id' => 'required',
@@ -228,6 +233,7 @@ class BooksController extends Controller
     // Force delete book
     public function forceDelete($id)
     {
+        // Gate::authorize('forceDelete', Book::class);
         Book::where('id', $id)->forceDelete();
 
         return back();
@@ -246,5 +252,10 @@ class BooksController extends Controller
     public function author($id)
     {
         return view('books.author', ['author' => Author::find($id)]);
+    }
+
+    public function dash()
+    {
+        return view('books.dashboard');
     }
 }

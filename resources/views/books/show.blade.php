@@ -47,9 +47,11 @@
                         @auth
                             <div class="d-flex">
                                 <a href="{{ $book->id }}/edit" class="mx-2">
-                                    <button type="button" class="btn btn-info btn-floating">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
+                                    @can('update', $book)
+                                        <button type="button" class="btn btn-info btn-floating">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    @endcan
                                 </a>
 
                                 <button type="button" class="btn btn-danger btn-floating" data-mdb-toggle="modal"

@@ -28,7 +28,8 @@
                                             <small> {{ $book['description'] }} </small>
                                         </p>
                                         <p class="card-text">
-                                            <small class="text-muted">{{ $book['author'] . ' ' . $book['year'] }}</small>
+                                            <small
+                                                class="text-muted">{{ $book->author->name . ' ' . $book['year'] }}</small>
                                         </p>
                                         <div class="d-flex justify-content-around">
                                             <a href="/restore/{{ $book['id'] }}">
@@ -87,7 +88,7 @@
                 @endforeach
             </div>
         @else
-            <h1>The trash is empty</h1>
+            <h1>There is no deleted books</h1>
         @endif
     </div>
 
