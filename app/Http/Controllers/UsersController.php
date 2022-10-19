@@ -84,7 +84,7 @@ class UsersController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($formFields, $remember) && Gate::authorize('admin')) {
+        if (Auth::attempt($formFields, $remember) && (Gate::allows('admin'))) {
             $request->session()->regenerate();
 
             // return redirect('/');
@@ -95,6 +95,26 @@ class UsersController extends Controller
             // return redirect('/');
             return redirect()->intended('/');
         }
+
+
+        // return redirect()->intended('/');
+
+
+        // if (Auth::attempt($formFields, $remember) ) {
+        //     $request->session()->regenerate();
+
+        //     // return redirect('/');
+        //     // return redirect()->intended('/dashboard');
+        //     if (Gate::allows('admin')) {
+        //         return redirect('/dashboard');
+        //     }
+        //     if (Gate::allows('notadmin')) {
+        //         return redirect('/');
+        //     }
+
+        //     // return redirect()->intended('/');
+        // }
+
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }

@@ -40,7 +40,7 @@ Route::resource('/books', BooksController::class);
 
 // ---------------------Routes for Registration-----------------------------
 // Show Register Form
-Route::get('/register', [UsersController::class, 'create']);
+Route::get('/register', [UsersController::class, 'create'])->middleware('guest');
 
 // Create New User
 Route::post('/users', [UsersController::class, 'store']);
@@ -49,7 +49,7 @@ Route::post('/users', [UsersController::class, 'store']);
 Route::post('/logout', [UsersController::class, 'logout']);
 
 // Show Login Form 
-Route::get('/login', [UsersController::class, 'login'])->name('login');
+Route::get('/login', [UsersController::class, 'login'])->name('login')->middleware('guest');
 
 // Login User
 Route::post('users/authenticate', [UsersController::class, 'authenticate']);

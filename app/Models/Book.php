@@ -27,7 +27,7 @@ class Book extends Model
         // 
 
         // $author = Author::where("name", "=", request("search"))->first();
-        $author = Author::where("name", "like", '%' .  request("search") . '%')->first() ?? false;
+        // $author = Author::where("name", "like", '%' .  request("search") . '%')->first();
 
         if ($filters['search'] ?? false) {
             $query->where('title', 'like', '%' . request('search') . '%')
@@ -35,7 +35,7 @@ class Book extends Model
                 ->orWhere('language', 'like', '%' . request('search') . '%')
                 ->orWhere('country', 'like', '%' . request('search') . '%')
                 // ->orWhere("author_id", "=", $authors->id)
-                ->orWhere("author_id", "=", $author->id)
+                // ->orWhere("author_id", "=", $author->id)
                 // ->orWhere($authors, 'like', '%' . request('search') . '%')
                 ->orWhere('year', 'like', '%' . request('search') . '%');
         }
